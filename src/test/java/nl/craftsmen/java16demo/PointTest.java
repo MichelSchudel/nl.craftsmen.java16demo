@@ -9,14 +9,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PointTest {
 
-    private String json = """
-            
-            { "x": 7, "y": 8}
-            
-            """;
     @Test
     void testPoint() {
-        Point point = new Point(1,2);
+        Point point = new Point(1, 2);
         assertThat(point.x()).isEqualTo(1);
         assertThat(point.y()).isEqualTo(2);
     }
@@ -30,17 +25,21 @@ class PointTest {
 
     @Test
     void testJacksonSerialize() throws IOException {
-        Point point = new Point(5,6);
+        Point point = new Point(5, 6);
         ObjectMapper objectMapper = new ObjectMapper();
         String serializedPoint = objectMapper.writeValueAsString(point);
-        assertThat(serializedPoint).contains("5");
-        assertThat(serializedPoint).contains("6");
+        assertThat(serializedPoint).contains("5").contains("6");
     }
 
     @Test
     void testJacksonDeserialize() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        Point point = objectMapper.readValue(json.getBytes(),Point.class);
+        String json = """
+                            
+                { "x": 7, "y": 8}
+                            
+                """;
+        Point point = objectMapper.readValue(json.getBytes(), Point.class);
         assertThat(point.x()).isEqualTo(7);
         assertThat(point.y()).isEqualTo(8);
     }
