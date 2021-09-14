@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.RecordComponent;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,6 +44,13 @@ class PointTest {
         Point point = objectMapper.readValue(json.getBytes(), Point.class);
         assertThat(point.x()).isEqualTo(7);
         assertThat(point.y()).isEqualTo(8);
+    }
+
+    @Test
+    void reflectionTest() {
+        RecordComponent[] components= Point.class.getRecordComponents();
+        Point.class.isRecord();
+        Field[] fields = Point.class.getFields();
     }
 
 }
